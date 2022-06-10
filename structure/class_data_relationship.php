@@ -28,10 +28,13 @@ class DataRelationship {
     /** @var string */
     private $attribute;
 
+    /** @var string */
+    private $default;
+
     /** @var boolean */
     private $autoIncrement;
     
-    public function __construct($column, $atribute, $type) {
+    public function __construct($column, $atribute, $type = false) {
         $this->column    = $column;
         $this->attribute = $atribute;
         $this->type      = $type;
@@ -63,7 +66,9 @@ class DataRelationship {
      * @return self
      */
     public function references($column, $atribute) {
-        $this->reference = ['col' => $column, 'att' => $atribute];
+        if ($this->isForeign()) {
+            $this->reference = ['col' => $column, 'att' => $atribute];
+        }
         return $this;
     }
 
@@ -73,7 +78,9 @@ class DataRelationship {
      * @return self
      */
     public function on($table) {
-        $this->referenceTable = $table;
+        if (count($this->getReference()) > 0) {
+            $this->referenceTable = $table;
+        }
         return $this;
     }
 
@@ -81,7 +88,7 @@ class DataRelationship {
      * Get the value of primary
      * @return boolean
      */ 
-    public function getPrimary() {
+    public function isPrimary() {
         return $this->primary;
     }
 
@@ -89,7 +96,7 @@ class DataRelationship {
      * Get the value of foreign
      * @return boolean
      */ 
-    public function getForeign() {
+    public function isForeign() {
         return $this->foreign;
     }
 
@@ -133,11 +140,19 @@ class DataRelationship {
         return $this->attribute;
     }
 
+     /**
+     * Get the value of default
+     * @return string
+     */ 
+    public function getDefault() {
+        return $this->default;
+    }
+
     /**
      * Get the value of autoIncrement
      * @return boolean
      */ 
-    public function getAutoIncrement(){
+    public function isAutoIncrement(){
         return $this->autoIncrement;
     }
 

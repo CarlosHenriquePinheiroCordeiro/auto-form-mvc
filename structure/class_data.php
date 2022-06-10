@@ -11,10 +11,13 @@ use structure\Connect;
 abstract class Data implements InterfaceData {
 
     protected $relationships = [];
+    protected $foreginKeys   = [];
 
     /**
      * Sets a integer relationship
      * Define um relacionamento como Integer
+     * @param string $column
+     * @param string $attribute
      * @return DataRelationship
      */
     public function integer($column, $attribute) {
@@ -26,7 +29,9 @@ abstract class Data implements InterfaceData {
     /**
      * Sets a varchar relationship
      * Define um relacionamento como Varchar
-     * @return DataRelationship
+     * @param string $column
+     * @param string $attribute
+     * @return DataRelationship $rel
      */
     public function varchar($column, $attribute) {
         $rel = new DataRelationship($column, $attribute, DataRelationship::VARCHAR);
@@ -37,12 +42,27 @@ abstract class Data implements InterfaceData {
     /**
      * Sets a Date relationship
      * Define um relacionamento como Date
+     * @param string $column
+     * @param string $attribute
      * @return DataRelationship
      */
     public function date($column, $attribute) {
         $rel = new DataRelationship($column, $attribute, DataRelationship::DATE);
         $relationships[] = $rel;
         return $rel;
+    }
+
+    /**
+     * Sets a foreign key relationship
+     * Define um relacionamento como Date
+     * @param string $column
+     * @param string $attribute
+     * @return DataRelationship
+     */
+    public function foreignKey($column, $attribute) {
+        $fKey = new DataRelationship($column, $attribute);
+        $relationships[] = $fKey;
+        return $fKey;
     }
 
     /**
