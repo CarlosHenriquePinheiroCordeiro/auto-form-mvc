@@ -10,6 +10,7 @@ use structure\Connect;
  */
 abstract class Data implements InterfaceData {
 
+    protected $Model;
     protected $relationships = [];
     protected $foreginKeys   = [];
 
@@ -22,7 +23,7 @@ abstract class Data implements InterfaceData {
      */
     public function integer($column, $attribute) {
         $rel = new DataRelationship($column, $attribute, DataRelationship::INTEGER);
-        $relationships[] = $rel;
+        $this->relationships[] = $rel;
         return $rel;
     }
 
@@ -35,7 +36,7 @@ abstract class Data implements InterfaceData {
      */
     public function varchar($column, $attribute) {
         $rel = new DataRelationship($column, $attribute, DataRelationship::VARCHAR);
-        $relationships[] = $rel;
+        $this->relationships[] = $rel;
         return $rel;
     }
 
@@ -48,7 +49,7 @@ abstract class Data implements InterfaceData {
      */
     public function date($column, $attribute) {
         $rel = new DataRelationship($column, $attribute, DataRelationship::DATE);
-        $relationships[] = $rel;
+        $this->relationships[] = $rel;
         return $rel;
     }
 
@@ -61,7 +62,8 @@ abstract class Data implements InterfaceData {
      */
     public function foreignKey($column, $attribute) {
         $fKey = new DataRelationship($column, $attribute);
-        $relationships[] = $fKey;
+        $this->foreignKeys[]   = $fKey;
+        $this->relationships[] = $fKey;
         return $fKey;
     }
 
@@ -71,6 +73,7 @@ abstract class Data implements InterfaceData {
      * @return boolean
      */
     public function insert() {
+        
         return true;
     }
 
@@ -132,6 +135,22 @@ abstract class Data implements InterfaceData {
      */
     private function rollback() {
         $this->getConn()->rollBack();
+    }
+
+    /**
+     * Get the value of Model
+     */ 
+    public function getModel() {
+        return $this->Model;
+    }
+
+    /**
+     * Set the value of Model
+     * @return  self
+     */ 
+    public function setModel($Model) {
+        $this->Model = $Model;
+        return $this;
     }
 
 

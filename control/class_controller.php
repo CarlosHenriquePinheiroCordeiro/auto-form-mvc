@@ -7,7 +7,10 @@ namespace controller;
  */
 abstract class Controller {
 
+    protected function prepareModel() {
+        
 
+    }
 
 
 }

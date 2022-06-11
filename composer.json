@@ -1,0 +1,16 @@
+{
+    "name": "php/auto-form-mvc",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Php\\AutoFormMvc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "CarlosHenriquePinheiroCordeiro",
+            "email": "carloshenpincord@gmail.com"
+        }
+    ],
+    "require": {}
+}
