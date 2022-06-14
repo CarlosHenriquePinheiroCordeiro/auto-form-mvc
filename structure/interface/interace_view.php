@@ -7,7 +7,17 @@ namespace structure\interface;
  */
 interface InterfaceView {
 
+    /**
+     * Add the view input fields
+     * Adiciona os campos da tela 
+     */
+    public function setInputs();
 
+    /**
+     * Sets the form view actions
+     * Define as ações do formulário da tela
+     */
+    public function setActions();
 
 
 }

@@ -1,5 +1,6 @@
 <?php
 namespace structure;
+use PDO;
 use structure\interface\InterfaceData;
 use structure\DataRelationship;
 use structure\Connect;
@@ -21,7 +22,7 @@ abstract class Data implements InterfaceData {
      * @param string $attribute
      * @return DataRelationship
      */
-    public function integer($column, $attribute) {
+    public function integer(string $column, string $attribute) : DataRelationship {
         $rel = new DataRelationship($column, $attribute, DataRelationship::INTEGER);
         $this->relationships[] = $rel;
         return $rel;
@@ -34,7 +35,7 @@ abstract class Data implements InterfaceData {
      * @param string $attribute
      * @return DataRelationship $rel
      */
-    public function varchar($column, $attribute) {
+    public function varchar(string $column, string $attribute) : DataRelationship {
         $rel = new DataRelationship($column, $attribute, DataRelationship::VARCHAR);
         $this->relationships[] = $rel;
         return $rel;
@@ -47,7 +48,7 @@ abstract class Data implements InterfaceData {
      * @param string $attribute
      * @return DataRelationship
      */
-    public function date($column, $attribute) {
+    public function date(string $column, string $attribute) : DataRelationship {
         $rel = new DataRelationship($column, $attribute, DataRelationship::DATE);
         $this->relationships[] = $rel;
         return $rel;
@@ -60,7 +61,7 @@ abstract class Data implements InterfaceData {
      * @param string $attribute
      * @return DataRelationship
      */
-    public function foreignKey($column, $attribute) {
+    public function foreignKey(string $column, string $attribute) : DataRelationship {
         $fKey = new DataRelationship($column, $attribute);
         $this->foreignKeys[]   = $fKey;
         $this->relationships[] = $fKey;
@@ -72,7 +73,7 @@ abstract class Data implements InterfaceData {
      * Insere o modelo no banco de dados
      * @return boolean
      */
-    public function insert() {
+    public function insert() : bool {
         
         return true;
     }
@@ -82,7 +83,7 @@ abstract class Data implements InterfaceData {
      * Atualiza o modelo no banco de dados
      * @return boolean
      */
-    public function update() {
+    public function update() : bool {
         return true;
     }
 
@@ -91,7 +92,7 @@ abstract class Data implements InterfaceData {
      * Exclui o modelo no banco de dados
      * @return boolean
      */
-    public function delete() {
+    public function delete() : bool {
         return true;
     }
 
@@ -109,7 +110,7 @@ abstract class Data implements InterfaceData {
      * Retorna a conexão
      * @return PDO
      */
-    private function getConn() {
+    private function getConn() : PDO {
         return Connect::getInstance();
     }
 

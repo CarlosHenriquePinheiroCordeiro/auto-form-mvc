@@ -33,8 +33,15 @@ class DataRelationship {
 
     /** @var boolean */
     private $autoIncrement;
+
+    /** @var array */
+    public static $types = [
+        self::INTEGER => 'number',
+        self::VARCHAR => 'text',
+        self::DATE    => 'date',
+    ];
     
-    public function __construct($column, $atribute, $type = false) {
+    public function __construct(string $column, string $atribute, int $type = 0) {
         $this->column    = $column;
         $this->attribute = $atribute;
         $this->type      = $type;
@@ -45,7 +52,7 @@ class DataRelationship {
      * Define que esta é uma chave primária
      * @return self
      */
-    public function primaryKey() {
+    public function primaryKey() : self {
         $this->primary = true;
         return $this;
     }
@@ -55,7 +62,7 @@ class DataRelationship {
      * Define que esta é uma chave estrangeira
      * @return self
      */
-    public function foreignKey() {
+    public function foreignKey() : self {
         $this->foreign = true;
         return $this;
     }
@@ -65,7 +72,7 @@ class DataRelationship {
      * Define a referência da chave estrangeira
      * @return self
      */
-    public function references($column, $atribute) {
+    public function references(string $column, string $atribute) : self {
         if ($this->isForeign()) {
             $this->reference = ['col' => $column, 'att' => $atribute];
         }
@@ -77,7 +84,7 @@ class DataRelationship {
      * Define a tabela da referência da chave estrangeira
      * @return self
      */
-    public function on($table) {
+    public function on(string $table) : self {
         if (count($this->getReference()) > 0) {
             $this->referenceTable = $table;
         }
@@ -88,7 +95,7 @@ class DataRelationship {
      * Get the value of primary
      * @return boolean
      */ 
-    public function isPrimary() {
+    public function isPrimary() : bool {
         return $this->primary;
     }
 
@@ -96,7 +103,7 @@ class DataRelationship {
      * Get the value of foreign
      * @return boolean
      */ 
-    public function isForeign() {
+    public function isForeign() : bool {
         return $this->foreign;
     }
 
@@ -104,7 +111,7 @@ class DataRelationship {
      * Get the value of reference
      * @return array
      */ 
-    public function getReference() {
+    public function getReference() : array {
         return $this->reference;
     }
 
@@ -112,7 +119,7 @@ class DataRelationship {
      * Get the value of referenceTable
      * @return string
      */ 
-    public function getReferenceTable() {
+    public function getReferenceTable() : string {
         return $this->referenceTable;
     }
 
@@ -120,7 +127,7 @@ class DataRelationship {
      * Get the value of type
      * @return int
      */ 
-    public function getType() {
+    public function getType() : int {
         return $this->type;
     }
 
@@ -128,7 +135,7 @@ class DataRelationship {
      * Get the value of column
      * @return string
      */ 
-    public function getColumn() {
+    public function getColumn() : string {
         return $this->column;
     }
 
@@ -136,7 +143,7 @@ class DataRelationship {
      * Get the value of attribute
      * @return string
      */ 
-    public function getAttribute() {
+    public function getAttribute() : string {
         return $this->attribute;
     }
 
@@ -144,7 +151,7 @@ class DataRelationship {
      * Get the value of default
      * @return string
      */ 
-    public function getDefault() {
+    public function getDefault() : string {
         return $this->default;
     }
 
@@ -152,7 +159,7 @@ class DataRelationship {
      * Get the value of autoIncrement
      * @return boolean
      */ 
-    public function isAutoIncrement(){
+    public function isAutoIncrement() : bool {
         return $this->autoIncrement;
     }
 
