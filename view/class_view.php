@@ -27,9 +27,14 @@ abstract class View implements InterfaceView {
         $html .= '</form>';
     }
 
+    /**
+     * Add the form inputs
+     * Adiciona os campos do formulário
+     */
     protected function addFormInputs(string $html) {
         foreach ($this->inputs as $input) {
-            $html .= $input->toHtml();
+            $html .= $input->inputToHtml();
+            $html .= '<br>';
         }
     }
 

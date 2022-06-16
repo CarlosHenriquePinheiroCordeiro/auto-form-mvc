@@ -9,6 +9,7 @@ class Input {
     protected $type;
     protected $disabled;
     protected $required;
+    protected $value;
 
     public function __construct(int $type, string $name, string $title) {
         $this->setType($type);
@@ -20,7 +21,7 @@ class Input {
      * Returns the input in a HTML format
      * Retorna o campo em formato HTML
      */
-    public function toHtml() : string {
+    public function inputToHtml() : string {
         $html = '';
         $this->label($html);
         $this->input($html);
@@ -28,7 +29,7 @@ class Input {
     }
 
     /**
-     * Return the input label in a HTML format
+     * Returns the input label in a HTML format
      * Retorna o label do campo em formato HTML
      */
     protected function label($html) {
@@ -36,28 +37,102 @@ class Input {
     }
 
     /**
-     * Build the HTML input
+     * Builds the HTML input
      * Monta o HTML do campo
      */
     protected function input($html) {
-        $input = '<input';
-        $input .= '>';
-        $html .= $input;
+        $html .= '<input '.$this->inputElements().'>';
     }
 
     /**
-     * Sets the input type
-     * Define o tipo do campo
+     * Returns the input elements
+     * Retorna os elementos do campo
+     * @return string
      */
-    protected function type($input) {
-        $input .= ' type='.DataRelationship::$types[$this->getType()];
+    protected function inputElements() : string {
+        $elements = '';
+        $elements .= $this->typeToHtml();
+        $elements .= $this->nameToHtml();
+        $elements .= $this->placeholderToHtml();
+        $elements .= $this->valueToHtml();
+        $elements .= $this->requiredToHtml();
+        $elements .= $this->disabledToHtml();
+        return $elements;
+    }
+
+    /**
+     * Returns the input type in HTML
+     * Retorna o tipo do campo em HTML
+     */
+    protected function typeToHtml() : string {
+        return ' type='.DataRelationship::$types[$this->getType()];
+    }
+
+    /**
+     * Returns the name for the input in HTML
+     * Retorna o name para o campo em HTML
+     */
+    protected function nameToHtml() : string {
+        return ' name='.$this->getName();
+    }
+
+    /**
+     * Returns the placeholder in HTML
+     * Retorna o placeholder em HTML
+     * @return string
+     */
+    protected function placeholderToHtml() : string {
+        $placeholder = '';
+        if ($this->getPlaceholder() != null) {
+            $placeholder .= 'placeholder='.$this->getPlaceholder();
+        }
+        return $placeholder;
+    }
+
+    /**
+     * Returns the value in HTML
+     * Retorna o valor em HTML
+     * @return string
+     */
+    protected function valueToHtml() : string {
+        $value = '';
+        if ($this->getValue() != null) {
+            $value .= 'value='.$this->getValue();
+        }
+        return $value;
+    }
+
+    /**
+     * Returns if the input is required in HTML
+     * Retorna se o campo é obrigatório em HTML
+     * @return string
+     */
+    protected function requiredToHtml() : string {
+        $required = '';
+        if ($this->getRequired() != null) {
+            $required .= ' required';
+        }
+        return $required;
+    }
+
+    /**
+     * Returns if the input is disabled in HTML
+     * Retorna se o campo é desabilitado em HTML
+     * @return string
+     */
+    protected function disabledToHtml() : string {
+        $disabled = '';
+        if ($this->getDisabled() != null) {
+            $disabled .= ' disabled';
+        }
+        return $disabled;
     }
 
     /**
      * Get the value of name
      * @return string
      */ 
-    public function getName() {
+    public function getName() : string {
         return $this->name;
     }
 
@@ -158,6 +233,22 @@ class Input {
      */ 
     public function setRequired(bool $required) {
         $this->required = $required;
+        return $this;
+    }
+
+    /**
+     * Get the value of value
+     */ 
+    public function getValue() {
+        return $this->value;
+    }
+
+    /**
+     * Set the value of value
+     * @return  self
+     */ 
+    public function setValue($value) {
+        $this->value = $value;
         return $this;
     }
 
