@@ -5,7 +5,7 @@ USE project;
 CREATE TABLE `tbperson` (
   `prsid`   serial      NOT NULL AUTO_INCREMENT,
   `prsname` varchar(45) NOT NULL       	       ,
-  `prsbirthdate` date   NOT NULL			   ,
+  `prsbirthdate` date   NOT NULL			         ,
   PRIMARY KEY (`prsid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
